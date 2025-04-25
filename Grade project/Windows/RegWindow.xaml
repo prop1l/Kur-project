@@ -1,0 +1,318 @@
+﻿<Window x:Class="Grade_project.Windows.RegWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Height="720"
+        Width="1080"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#333333"
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen">
+
+
+    <!--Горизонтальный градиент-->
+    <!--<Window.Background>
+        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+            <GradientStop Color="#333333" Offset="0.0" />
+            <GradientStop Color="#222222" Offset="0.5" />
+            <GradientStop Color="#111111" Offset="1.0" />
+        </LinearGradientBrush>
+    </Window.Background>-->
+
+    <!--диагональный градиент-->
+    <!--<Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#444444" Offset="0.0" />
+            <GradientStop Color="#333333" Offset="0.25" />
+            <GradientStop Color="#222222" Offset="0.5" />
+            <GradientStop Color="#111111" Offset="0.75" />
+            <GradientStop Color="#000000" Offset="1.0" />
+        </LinearGradientBrush>
+    </Window.Background>-->
+
+    <!--<Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#333333" Offset="0.0" />
+            <GradientStop Color="#2C2C2C" Offset="0.25" />
+            <GradientStop Color="#252525" Offset="0.5" />
+            <GradientStop Color="#1E1E1E" Offset="0.75" />
+            <GradientStop Color="#111111" Offset="1.0" />
+        </LinearGradientBrush>
+    </Window.Background>-->
+
+    <!--Линейный градиент--> 
+    <!--<Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#333333" Offset="-0.02" />
+            <GradientStop Color="#111111" Offset="0.96" />
+        </LinearGradientBrush>
+    </Window.Background>-->
+
+        <!-- Радиальный градиент -->
+    <!--<Window.Background>
+        <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+            <GradientStop Color="#333333" Offset="0.0" />
+            <GradientStop Color="#111111" Offset="1.4" />
+        </RadialGradientBrush>
+    </Window.Background>-->
+
+    <Window.Resources>
+        <!-- Базовый стиль для кнопок -->
+        <Style x:Key="WindowButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="Background" Value="#00FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для текстовых полей -->
+        <Style x:Key="InputFieldStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+
+        <Style x:Key="InputPasswordFieldStyle" TargetType="PasswordBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Верхняя панель -->
+        <Border Grid.ColumnSpan="3" Background="#444444" MouseDown="Window_Drag">
+            <Grid HorizontalAlignment="Stretch">
+                <Label Content="Регистрация"
+                       VerticalAlignment="Center"
+                       Foreground="White"
+                       FontSize="14"
+                       Margin="10,0,0,0"/>
+                <StackPanel HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Margin="0,0,4,0">
+                    <Button Style="{StaticResource WindowButtonStyle}"
+                            Content="_"
+                            FontWeight="Bold"
+                            Click="Button_Min_Click"/>
+
+                    <Button Style="{StaticResource WindowButtonStyle}"
+                            Content="◻"
+                            FontWeight="Light"
+                            Click="Button_Max_Click"/>
+
+                    <Button Style="{StaticResource WindowButtonStyle}"
+                            Content="✕"
+                            FontWeight="Black"
+                            Click="Button_Close_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Форма регистрации -->
+        <Border Grid.Row="2"
+                Grid.Column="1"
+                CornerRadius="30"
+                Background="#2B2B2B"
+                Padding="40">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Регистрация"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           Margin="0,20,0,20"/>
+
+                <!-- Поле логина -->
+                <Border Grid.Row="1"
+                        Background="#444444"
+                        BorderBrush="#666666"
+                        BorderThickness="1"
+                        CornerRadius="20"
+                        Padding="10"
+                        Margin="0,0,0,20">
+                    <Grid>
+                        <TextBox x:Name="LoginBox"
+                                 Style="{StaticResource InputFieldStyle}"
+                                 GotFocus="Input_GotFocus"
+                                 LostFocus="Input_LostFocus" />
+                        <TextBlock x:Name="Login"
+                                   Text="Логин"
+                                   Foreground="DarkGray"
+                                   FontSize="16"
+                                   IsHitTestVisible="False"
+                                   Visibility="Visible"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0" />
+                    </Grid>
+                </Border>
+
+                <!-- Поле email -->
+                <Border Grid.Row="2"
+                        Background="#444444"
+                        BorderBrush="#666666"
+                        BorderThickness="1"
+                        CornerRadius="20"
+                        Padding="10"
+                        Margin="0,0,0,20">
+                    <Grid>
+                        <TextBox x:Name="EmailBox"
+                                 Style="{StaticResource InputFieldStyle}"
+                                 GotFocus="Input_GotFocus"
+                                 LostFocus="Input_LostFocus" />
+                        <TextBlock x:Name="Email"
+                                   Text="Почта"
+                                   Foreground="DarkGray"
+                                   FontSize="16"
+                                   IsHitTestVisible="False"
+                                   Visibility="Visible"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0" />
+                    </Grid>
+                </Border>
+
+                <!-- Поле пароля -->
+                <Border Grid.Row="3"
+                        Background="#444444"
+                        BorderBrush="#666666"
+                        BorderThickness="1"
+                        CornerRadius="20"
+                        Padding="10"
+                        Margin="0,0,0,20">
+                    <Grid>
+                        
+                        <PasswordBox x:Name="PasswordBox"
+                                     Style="{StaticResource InputPasswordFieldStyle}"
+                                     GotFocus="Input_GotFocus1"
+                                     LostFocus="Input_LostFocus1" />
+                        
+                        <TextBlock x:Name="Password"
+                                   Text="Пароль"
+                                   Foreground="DarkGray"
+                                   FontSize="16"
+                                   IsHitTestVisible="False"
+                                   Visibility="Visible"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0" />
+                    </Grid>
+                </Border>
+
+                <!-- Повторение пароля -->
+                <Border Grid.Row="4"
+                        Background="#444444"
+                        BorderBrush="#666666"
+                        BorderThickness="1"
+                        CornerRadius="20"
+                        Padding="10"
+                        Margin="0,0,0,20">
+                    <Grid>
+
+                        <PasswordBox x:Name="ConfirmPasswordBox"
+                                     Style="{StaticResource InputPasswordFieldStyle}"
+                                     GotFocus="Input_GotFocus1"
+                                     LostFocus="Input_LostFocus1" />
+
+                        <TextBlock x:Name="ConfirmPassword"
+                                   Text="Повторите пароль"
+                                   Foreground="DarkGray"
+                                   FontSize="16"
+                                   IsHitTestVisible="False"
+                                   Visibility="Visible"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0" />
+                    </Grid>
+                </Border>
+
+                <!-- Кнопка регистрации -->
+                <Button Grid.Row="5"
+                        Content="Зарегистрироваться"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Width="200"
+                        Height="40"
+                        HorizontalAlignment="Center"
+                        Margin="0,20,0,20"
+                        Click="RegisterButton_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#FF4081" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#F22241"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- Ссылка на вход -->
+                <TextBlock Grid.Row="6"
+                           Text="Уже есть аккаунт? Авторизуйся"
+                           Foreground="LightGray"
+                           FontSize="20"
+                           HorizontalAlignment="Center"
+                           Cursor="Hand"
+                           MouseDown="LoginLink_Click"
+                           VerticalAlignment="Top"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

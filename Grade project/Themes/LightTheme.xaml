@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="WindowBackgroundColor" Color="White"/>
+    <SolidColorBrush x:Key="HeaderBackgroundColor" Color="LightGray"/>
+    <SolidColorBrush x:Key="SidebarBackgroundColor" Color="WhiteSmoke"/>
+    <SolidColorBrush x:Key="ContentBackgroundColor" Color="White"/>
+    <SolidColorBrush x:Key="TextColor" Color="White"/>
+    <SolidColorBrush x:Key="PlaceholderColor" Color="White"/>
+    <SolidColorBrush x:Key="ButtonHoverColor" Color="White"/>
+    <SolidColorBrush x:Key="ButtonCloseColor" Color="White"/>
+    <SolidColorBrush x:Key="PrimaryButtonColor" Color="White"/>
+</ResourceDictionary>

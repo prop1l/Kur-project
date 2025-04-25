@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject", "Grade project\GradeProject.csproj", "{055B85C0-F415-4C20-8CAB-14A5CCD7745D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGradeProject", "ApiGradeProject\ApiGradeProject.csproj", "{9BE973E0-FD50-4D52-A15F-093C246290AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{055B85C0-F415-4C20-8CAB-14A5CCD7745D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{055B85C0-F415-4C20-8CAB-14A5CCD7745D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{055B85C0-F415-4C20-8CAB-14A5CCD7745D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{055B85C0-F415-4C20-8CAB-14A5CCD7745D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BE973E0-FD50-4D52-A15F-093C246290AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BE973E0-FD50-4D52-A15F-093C246290AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BE973E0-FD50-4D52-A15F-093C246290AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE973E0-FD50-4D52-A15F-093C246290AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {328142AB-61DE-455A-85D3-54BD6975CD61}
+	EndGlobalSection
+EndGlobal
