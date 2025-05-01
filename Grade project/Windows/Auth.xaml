@@ -8,9 +8,10 @@
         Width="1080"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="{DynamicResource WindowBackgroundBrush}"
+        Background="{DynamicResource ContentBackgroundBrush}"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen">
+    
     <Window.Resources>
         <!-- Базовый стиль для кнопок -->
         <Style x:Key="WindowButtonStyle" TargetType="Button">
@@ -18,7 +19,7 @@
             <Setter Property="Height" Value="35"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextForegroundBrush}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -35,6 +36,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <!-- Стиль для текстовых полей -->
         <Style x:Key="InputBoxFieldStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>
@@ -44,6 +46,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="0"/>
         </Style>
+        
         <Style x:Key="InputPasswordBoxFieldStyle" TargetType="PasswordBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -52,10 +55,11 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="0"/>
         </Style>
+        
         <!-- Стиль для основной кнопки -->
         <Style x:Key="PrimaryButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="{DynamicResource PrimaryButtonBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextForegroundBrush}"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -73,6 +77,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -85,6 +90,7 @@
             <RowDefinition Height="2.5*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
         <!-- Верхняя панель -->
         <Border Grid.ColumnSpan="3" Background="{DynamicResource HeaderBackgroundBrush}" MouseDown="Window_Drag">
             <Grid HorizontalAlignment="Stretch">
@@ -110,6 +116,7 @@
                 </StackPanel>
             </Grid>
         </Border>
+        
         <!-- Форма авторизации -->
         <Border Grid.Row="2"
                 Grid.Column="1"
@@ -126,11 +133,12 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Авторизация"
-                           Foreground="{DynamicResource TextBrush}"
+                           Foreground="{DynamicResource TextForegroundBrush}"
                            FontSize="24"
                            FontWeight="Bold"
                            HorizontalAlignment="Center"
                            Margin="0,20,0,20"/>
+                
                 <!-- Поле логина -->
                 <Border Grid.Row="1"
                         Background="{DynamicResource ContentBackgroundBrush}"
@@ -154,6 +162,7 @@
                                    Margin="5,0,0,0" />
                     </Grid>
                 </Border>
+                
                 <!-- Поле пароля -->
                 <Border Grid.Row="2"
                         Background="{DynamicResource ContentBackgroundBrush}"
@@ -177,6 +186,7 @@
                                    Margin="5,0,0,0" />
                     </Grid>
                 </Border>
+                
                 <!-- Кнопка входа -->
                 <Button Grid.Row="3"
                         Content="Войти"
@@ -188,6 +198,7 @@
                         Margin="0,0,0,20"
                         Click="Auth_Click"
                         Style="{StaticResource PrimaryButtonStyle}"/>
+                
                 <!-- Ссылка регистрации -->
                 <TextBlock Grid.Row="4"
                            Text="Нет аккаунта? Зарегистрироваться"
@@ -199,6 +210,7 @@
                            VerticalAlignment="Top"/>
             </Grid>
         </Border>
+        
         <!-- Кнопка переключения тем -->
         <Button Content="Переключить тему"
                 Width="120"

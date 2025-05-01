@@ -20,7 +20,6 @@ namespace Grade_project.Windows
 
             LoginTextBox.Text = user.Login;
             EmailTextBox.Text = user.Email;
-            PasswordBox.Password = user.Password;
             IsEmailConfirmedCheckBox.IsChecked = user.IsEmailConfirmed;
         }
 
@@ -28,8 +27,7 @@ namespace Grade_project.Windows
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(LoginTextBox.Text) ||
-                string.IsNullOrWhiteSpace(EmailTextBox.Text) ||
-                string.IsNullOrWhiteSpace(PasswordBox.Password))
+                string.IsNullOrWhiteSpace(EmailTextBox.Text))
             {
                 MessageBox.Show("Все поля должны быть заполнены.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -37,7 +35,6 @@ namespace Grade_project.Windows
 
             User.Login = LoginTextBox.Text;
             User.Email = EmailTextBox.Text;
-            User.Password = PasswordBox.Password;
             User.IsEmailConfirmed = IsEmailConfirmedCheckBox.IsChecked ?? false;
 
             DialogResult = true;

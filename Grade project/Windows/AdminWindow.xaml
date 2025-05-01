@@ -11,18 +11,16 @@
         WindowStyle="None"
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource ContentBackgroundBrush}">
 
-    <Window.Background>
-        <StaticResource ResourceKey="WindowBackgroundColor"/>
-    </Window.Background>
     <Window.Resources>
         <!-- Базовый стиль для кнопок сайдбара -->
         <Style x:Key="SidebarButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="150"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextForegroundBrush}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -35,7 +33,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource ButtonHoverColor}"/>
+                    <Setter Property="Background" Value="{DynamicResource PrimaryButtonBrush}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -46,7 +44,7 @@
             <Setter Property="Height" Value="35"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextForegroundBrush}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -59,7 +57,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource ButtonHoverColor}"/>
+                    <Setter Property="Background" Value="{DynamicResource PrimaryButtonBrush}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -77,13 +75,13 @@
 
         <!-- Верхняя панель -->
         <Border Grid.ColumnSpan="2"
-                Background="{StaticResource HeaderBackgroundColor}"
+                Background="{DynamicResource HeaderBackgroundBrush}"
                 MouseDown="Window_Drag">
             <Grid HorizontalAlignment="Stretch">
                 <Label x:Name="XID"
                        Content="Тут иконка скорее всего"
                        VerticalAlignment="Center"
-                       Foreground="{StaticResource TextColor}"
+                       Foreground="{DynamicResource TextForegroundBrush}"
                        FontSize="14"
                        Margin="10,0,0,0"/>
                 <StackPanel HorizontalAlignment="Right"
@@ -106,105 +104,106 @@
         </Border>
 
         <!-- Левая боковая панель -->
-        <Grid Grid.Row="1">
-            
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
-            
-            <Border Grid.Column="0"
-                    Grid.Row="0"
-                    Background="{StaticResource SidebarBackgroundColor}"
-                    CornerRadius="0 10 10 0"
-                    Padding="10">
-                <StackPanel Orientation="Vertical">
-                    <!-- Кнопки для каждой сущности -->
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Группы"
-                            Tag="GroupsPage"
-                            Click="EntityButton_Click"/>
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Оценки"
-                            Tag="RatingsPage"
-                            Click="EntityButton_Click"/>
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Роли"
-                            Tag="RolesPage"
-                            Click="EntityButton_Click"/>
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Специальности"
-                            Tag="SpecialitiesPage"
-                            Click="EntityButton_Click"/>
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Предметы"
-                            Tag="SubjectsPage"
-                            Click="EntityButton_Click"/>
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Преподаватели"
-                            Tag="TeachersPage"
-                            Click="EntityButton_Click"/>
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Пользователи"
-                            Tag="UsersPage"
-                            Click="EntityButton_Click"/>
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Токены"
-                            Tag="TokensPage"
-                            Click="EntityButton_Click"/>
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Информация"
-                            Tag="UserInfosPage"
-                            Click="EntityButton_Click"/>
-                    <Button Style="{StaticResource SidebarButtonStyle}"
-                            Content="Роли пользователей"
-                            Tag="UserRolesPage"
-                            Click="EntityButton_Click"/>
-                </StackPanel>
-            </Border>
-            
-             <!-- Профиль пользователя -->
-            <Border Background="#212121"
-                    Grid.ColumnSpan="3"
-                    Grid.Row="2">
-                <Grid Grid.Row="2"
->
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="35"/>
-                </Grid.ColumnDefinitions>
+        <Border Grid.Column="0"
+                Grid.Row="1"
+                Background="{StaticResource SidebarBackgroundBrush}"
+                CornerRadius="0 10 10 0"
+                Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
 
-                    <Image Height="35"
-                               Width="35"
-                               Grid.Column="0"
-                               Margin="4,0,2,0"/>
+                <Border Grid.Row="0"
+                        Background="{DynamicResource SidebarBackgroundBrush}"
+                        CornerRadius="0 10 10 0"
+                        Padding="10">
+                    <StackPanel Orientation="Vertical">
+                        <!-- Кнопки для каждой сущности -->
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Группы"
+                                Tag="GroupsPage"
+                                Click="EntityButton_Click"/>
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Оценки"
+                                Tag="RatingsPage"
+                                Click="EntityButton_Click"/>
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Роли"
+                                Tag="RolesPage"
+                                Click="EntityButton_Click"/>
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Специальности"
+                                Tag="SpecialitiesPage"
+                                Click="EntityButton_Click"/>
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Предметы"
+                                Tag="SubjectsPage"
+                                Click="EntityButton_Click"/>
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Преподаватели"
+                                Tag="TeachersPage"
+                                Click="EntityButton_Click"/>
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Пользователи"
+                                Tag="UsersPage"
+                                Click="EntityButton_Click"/>
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Токены"
+                                Tag="TokensPage"
+                                Click="EntityButton_Click"/>
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Информация"
+                                Tag="UserInfosPage"
+                                Click="EntityButton_Click"/>
+                        <Button Style="{StaticResource SidebarButtonStyle}"
+                                Content="Роли пользователей"
+                                Tag="UserRolesPage"
+                                Click="EntityButton_Click"/>
+                    </StackPanel>
+                </Border>
 
-                        <StackPanel Orientation="Vertical"
-                                    VerticalAlignment="Center"
-                                    Grid.Column="1">
-                            <Label Content="Тессст" 
-                                    Foreground="{StaticResource TextColor}"/>
-                        </StackPanel>
 
-                        <!-- Кнопка настроек -->
+                <!-- Профиль пользователя -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="25"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Использование относительного пути к изображению -->
+                    <Image Source="C:\Users\User\source\repos\Grade project\Grade project\Image\Icon.jpg"
+                           Height="35"
+                           Width="35"
+                           Grid.Column="0"/>
+
+                    <StackPanel Orientation="Vertical"
+                                VerticalAlignment="Center"
+                                Grid.Column="1">
+                        <Label Content="Тессст" 
+                               Foreground="{StaticResource TextForegroundBrush}"/>
+                    </StackPanel>
+
+                    <!-- Кнопка настроек -->
                     <Button Grid.Column="2"
                             Style="{StaticResource WindowButtonStyle}"
                             Width="25" 
                             Height="25">
                         <fa:ImageAwesome Icon="Cog" 
-                                         Foreground="Bisque" 
-                                         Width="16" 
-                                         Height="16"/>
+                             Foreground="Bisque" 
+                             Width="16" 
+                             Height="16"/>
                     </Button>
                 </Grid>
-            </Border>
-        </Grid>
+            </Grid>
+        </Border>
 
         <!-- Основная область контента -->
         <Border Grid.Column="1"
                 Grid.Row="1"
-                Background="{StaticResource ContentBackgroundColor}"
+                Background="{DynamicResource ContentBackgroundBrush}"
                 CornerRadius="10"
                 Margin="10">
             <Frame x:Name="MainFrame"

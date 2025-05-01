@@ -6,7 +6,8 @@
     <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#111111"/>
     <SolidColorBrush x:Key="ContentBackgroundBrush" Color="#FFFFFF"/>
 
-    <SolidColorBrush x:Key="TextBrush" Color="#333333"/>
+    <SolidColorBrush x:Key="TextForegroundBrush" Color="#333333"/>
+    
     <SolidColorBrush x:Key="PlaceholderBrush" Color="#A0A0A0"/>
 
     <SolidColorBrush x:Key="ButtonHoverBrush" Color="#E0E0E0"/>
