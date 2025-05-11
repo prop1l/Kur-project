@@ -47,4 +47,9 @@ public class GroupsController : ControllerBase
         _context.SaveChanges();
         return NoContent();
     }
+
+    public object Update(int v, Group updatedGroup)
+    {
+        throw new NotImplementedException();
+    }
 }
