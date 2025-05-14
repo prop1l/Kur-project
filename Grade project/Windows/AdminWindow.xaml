@@ -79,7 +79,7 @@
                 MouseDown="Window_Drag">
             <Grid HorizontalAlignment="Stretch">
                 <Label x:Name="XID"
-                       Content="Тут иконка скорее всего"
+                       Content="Админ панель"
                        VerticalAlignment="Center"
                        Foreground="{DynamicResource TextForegroundBrush}"
                        FontSize="14"

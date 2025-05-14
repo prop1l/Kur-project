@@ -126,12 +126,56 @@ public class UsersController : ControllerBase
         _context.SaveChanges();
 
         var body = $@"
-                        <h3>Подтвердите ваш email</h3>
-                        <p>Ваш код подтверждения:</p>
-                        <h2>{token}</h2>
-                        <p>Введите его в приложении для завершения регистрации.</p>
-                        <br/>
-                        <p>С уважением,<br/>Илья</p>";
+                    <!DOCTYPE html>
+                    <html lang=""ru"">
+                    <head>
+                        <meta charset=""UTF-8"">
+                        <title>Подтверждение Email</title>
+                        <style>
+                            body {{
+                                font-family: Arial, sans-serif;
+                                background-color: #f7f7f7;
+                                margin: 0;
+                                padding: 20px;
+                            }}
+                            .container {{
+                                max-width: 500px;
+                                margin: 0 auto;
+                                background-color: #ffffff;
+                                border-radius: 8px;
+                                padding: 30px;
+                                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                            }}
+                            h3 {{
+                                color: #333333;
+                            }}
+                            p {{
+                                font-size: 16px;
+                                color: #555555;
+                            }}
+                            h2 {{
+                                color: #007BFF;
+                                font-weight: bold;
+                                letter-spacing: 2px;
+                            }}
+                            .signature {{
+                                margin-top: 20px;
+                                font-style: italic;
+                                color: #888888;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class=""container"">
+                            <h3>Подтвердите ваш email</h3>
+                            <p>Ваш код подтверждения:</p>
+                            <h2>{token}</h2>
+                            <p>Введите его в приложении для завершения регистрации.</p>
+                            <br/>
+                            <p class=""signature"">С уважением,<br/>Илья</p>
+                        </div>
+                    </body>
+                    </html>";
 
         try
         {
@@ -261,3 +305,5 @@ public class UsersController : ControllerBase
         return Ok(new { Message = "Токен отправлен повторно." });
     }
 }
+
+

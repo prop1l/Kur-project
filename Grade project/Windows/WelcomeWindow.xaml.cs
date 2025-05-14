@@ -9,6 +9,7 @@ namespace Grade_project.Windows
     public partial class WelcomeWindow : Window
     {
         private readonly int _userId;
+        public string UserLogin { get; set; }
 
         public WelcomeWindow(int id)
         {
@@ -23,15 +24,12 @@ namespace Grade_project.Windows
             try
             {
                 using var client = new HttpClient();
-
                 var userResponse = await client.GetAsync($"http://localhost:5172/api/Users/{_userId}");
-
                 if (!userResponse.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Не удалось загрузить данные пользователя.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-
                 var user = await userResponse.Content.ReadFromJsonAsync<User>();
                 if (user == null)
                 {
@@ -39,16 +37,16 @@ namespace Grade_project.Windows
                     return;
                 }
 
-                var roleResponse = await client.GetAsync($"http://localhost:5172/api/UserRoles/{_userId}");
+                UserLogin = user.Login;
+                this.DataContext = this; 
 
+                var roleResponse = await client.GetAsync($"http://localhost:5172/api/UserRoles/{_userId}");
                 if (!roleResponse.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Не удалось загрузить роль пользователя.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-
                 var roles = await roleResponse.Content.ReadFromJsonAsync<List<UserRole>>();
-
                 if (roles != null && roles.Any(r => r.Role?.RoleName == "Admin"))
                 {
                     AdminButton.Visibility = Visibility.Visible;

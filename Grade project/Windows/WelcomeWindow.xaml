@@ -114,8 +114,9 @@
                     <StackPanel Orientation="Vertical"
                                 VerticalAlignment="Center"
                                 Grid.Column="1">
-                        <Label Content="Тессст" 
-                               Foreground="{StaticResource TextForegroundBrush}"/>
+                        <Label Content="{Binding UserLogin}"
+                               Foreground="{StaticResource TextForegroundBrush}"
+                               FontSize="16"/>
                     </StackPanel>
 
                     <!-- Кнопка настроек -->
@@ -139,7 +140,6 @@
                 CornerRadius="10"
                 Margin="10">
 
-            <!--Тут грэйд с оценками-->
         </Border>
 
 
