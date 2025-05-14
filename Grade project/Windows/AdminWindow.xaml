@@ -113,6 +113,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
 
                 <Border Grid.Row="0"
@@ -124,14 +125,6 @@
                         <Button Style="{StaticResource SidebarButtonStyle}"
                                 Content="Группы"
                                 Tag="GroupsPage"
-                                Click="EntityButton_Click"/>
-                        <Button Style="{StaticResource SidebarButtonStyle}"
-                                Content="Оценки"
-                                Tag="RatingsPage"
-                                Click="EntityButton_Click"/>
-                        <Button Style="{StaticResource SidebarButtonStyle}"
-                                Content="Роли"
-                                Tag="RolesPage"
                                 Click="EntityButton_Click"/>
                         <Button Style="{StaticResource SidebarButtonStyle}"
                                 Content="Специальности"
@@ -160,9 +153,18 @@
                     </StackPanel>
                 </Border>
 
-
+                <Button Grid.Row="1"
+                        x:Name="AdminButton"
+                        Style="{StaticResource WindowButtonStyle}"
+                        Content="Назад"
+                        FontSize="18"
+                        Foreground="{StaticResource TextForegroundBrush}"
+                        Visibility="Visible"
+                        Width="120"
+                        Click="AdminButtonBack_Click"/>
+                
                 <!-- Профиль пользователя -->
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="35"/>
                         <ColumnDefinition Width="*"/>

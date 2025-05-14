@@ -42,7 +42,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="175"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -84,19 +84,21 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
 
-                <Button x:Name="AdminButton"
+                <Button Grid.Row="1"
+                        x:Name="AdminButton"
                         Style="{StaticResource WindowButtonStyle}"
                         Content="Админка"
-                        FontSize="14"
+                        FontSize="18"
                         Foreground="{StaticResource TextForegroundBrush}"
-                        Visibility="Collapsed"
+                        Visibility="Visible"
                         Width="120"
                         Click="AdminButton_Click"/>
 
                     <!-- Профиль пользователя -->
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="35"/>
                         <ColumnDefinition Width="*"/>

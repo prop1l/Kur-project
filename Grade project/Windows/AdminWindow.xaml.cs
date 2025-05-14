@@ -5,8 +5,10 @@ namespace Grade_project.Windows
 {
     public partial class AdminWindow : Window
     {
-        public AdminWindow()
+        private int _userId;
+        public AdminWindow(int id)
         {
+            _userId = id;
             InitializeComponent();
         }
 
@@ -74,6 +76,14 @@ namespace Grade_project.Windows
             {
                 this.DragMove();
             }
+        }
+
+        private void AdminButtonBack_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new WelcomeWindow(_userId);
+            win.Show();
+            this.Close();
+
         }
     }
 }

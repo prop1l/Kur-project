@@ -40,7 +40,10 @@ public partial class PostgresContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        if (!optionsBuilder.IsConfigured)
+        {
             optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=root");
+        }
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

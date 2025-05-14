@@ -24,7 +24,6 @@ namespace Grade_project.Windows
             {
                 using var client = new HttpClient();
 
-                // 1. Получаем пользователя по ID
                 var userResponse = await client.GetAsync($"http://localhost:5172/api/Users/{_userId}");
 
                 if (!userResponse.IsSuccessStatusCode)
@@ -40,7 +39,6 @@ namespace Grade_project.Windows
                     return;
                 }
 
-                // 2. Получаем роли пользователя
                 var roleResponse = await client.GetAsync($"http://localhost:5172/api/UserRoles/{_userId}");
 
                 if (!roleResponse.IsSuccessStatusCode)
@@ -51,7 +49,6 @@ namespace Grade_project.Windows
 
                 var roles = await roleResponse.Content.ReadFromJsonAsync<List<UserRole>>();
 
-                // 3. Проверяем наличие роли Admin
                 if (roles != null && roles.Any(r => r.Role?.RoleName == "Admin"))
                 {
                     AdminButton.Visibility = Visibility.Visible;
@@ -69,7 +66,7 @@ namespace Grade_project.Windows
 
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
-            var adminWindow = new AdminWindow();
+            var adminWindow = new AdminWindow(_userId);
             adminWindow.Show();
             this.Close();
         }
