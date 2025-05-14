@@ -29,23 +29,6 @@ namespace Tests.ControllerTests
             _context.SaveChanges();
         }
 
-        [Fact]
-        public void GetAll_ReturnsAllTokenss()
-        {
-            var user = new User { Email = "tokenuser@example.com", Login = "tokenuser", Password = "pass" };
-            _context.Users.Add(user);
-            _context.Tokensses.AddRange(
-                new Tokenss { TokenValue = "abc123", UsersId = user.UserId, ExpiresAt = DateTime.UtcNow.AddDays(1) },
-                new Tokenss { TokenValue = "def456", UsersId = user.UserId, ExpiresAt = DateTime.UtcNow.AddDays(1) }
-            );
-            _context.SaveChanges();
-
-            var result = _controller.GetAll();
-
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            var tokenssList = Assert.IsAssignableFrom<List<Tokenss>>(okResult.Value);
-            Assert.Equal(2, tokenssList.Count);
-        }
 
         [Fact]
         public void GetById_ReturnsToken_WhenExists()

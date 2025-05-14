@@ -157,10 +157,6 @@
                                 Content="Информация"
                                 Tag="UserInfosPage"
                                 Click="EntityButton_Click"/>
-                        <Button Style="{StaticResource SidebarButtonStyle}"
-                                Content="Роли пользователей"
-                                Tag="UserRolesPage"
-                                Click="EntityButton_Click"/>
                     </StackPanel>
                 </Border>
 

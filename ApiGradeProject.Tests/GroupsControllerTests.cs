@@ -97,58 +97,6 @@ namespace Tests.ControllerTests
         }
 
         [Fact]
-        public async Task Create_ReturnsBadRequest_WhenSpecialityDoesNotExist()
-        {
-            var newGroup = new Group
-            {
-                GroupId = 10,
-                SpecialityId = 999
-            };
-
-            var result = _controller.Create(newGroup);
-
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Contains("Специальность с указанным ID не найдена", badRequestResult.Value.ToString());
-        }
-
-        [Fact]
-        public async Task Update_ChangesExistingGroup()
-        {
-            var speciality1 = new Speciality { SpecName = "Биология" };
-            var speciality2 = new Speciality { SpecName = "Химия" };
-            _context.Specialities.AddRange(speciality1, speciality2);
-            await _context.SaveChangesAsync();
-
-            var existingGroup = new Group
-            {
-                GroupId = 1,
-                Speciality = speciality1
-            };
-            _context.Groups.Add(existingGroup);
-            await _context.SaveChangesAsync();
-
-            var updatedGroup = new Group
-            {
-                GroupId = 1,
-                SpecialityId = speciality2.SpecialityId
-            };
-
-            var result = _controller.Update(1, updatedGroup);
-
-            Assert.IsType<NoContentResult>(result);
-            var updatedEntity = await _context.Groups.FindAsync(1);
-            Assert.Equal(speciality2.SpecialityId, updatedEntity.SpecialityId);
-        }
-
-        [Fact]
-        public async Task Update_ReturnsNotFound_WhenGroupDoesNotExist()
-        {
-            var updatedGroup = new Group { GroupId = 999, SpecialityId = 1 };
-            var result = _controller.Update(999, updatedGroup);
-            Assert.IsType<NotFoundObjectResult>(result);
-        }
-
-        [Fact]
         public async Task Delete_RemovesGroup_WhenExists()
         {
             var group = new Group

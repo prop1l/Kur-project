@@ -135,13 +135,43 @@
 
         <Grid Grid.Row="4"
               Grid.Column="1">
+            <Button HorizontalAlignment="Left"
+            Content="Отправить заново"
+            FontSize="16"
+            FontWeight="Bold"
+            Width="180"
+            Height="40"
+            Click="ResendTokenButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#6689AF" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F22241"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
             <Button Grid.Row="5"
                         Content="Потвердить почту"
                         FontSize="16"
                         FontWeight="Bold"
-                        Width="200"
+                        Width="180"
                         Height="40"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Right"
                         Click="ConfirmButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">

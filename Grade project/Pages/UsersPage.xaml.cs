@@ -1,4 +1,5 @@
 ﻿using Grade_project.Database.Models;
+using Grade_project.Windows;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Windows;
@@ -23,7 +24,7 @@ namespace Grade_project.Pages
         {
             try
             {
-                var response = await _httpClient.GetAsync("Users");
+                var response = await _httpClient.GetAsync("http://localhost:5172/Users");
                 if (response.IsSuccessStatusCode)
                 {
                     var users = await response.Content.ReadFromJsonAsync<List<User>>();
@@ -42,7 +43,7 @@ namespace Grade_project.Pages
 
         private async void AddUser_Click(object sender, RoutedEventArgs e)
         {
-            var addUserWindow = new Windows.AddEditUserWindow(); 
+            var addUserWindow = new AddEditUserWindow(); 
             if (addUserWindow.ShowDialog() == true)
             {
                 var user = addUserWindow.User;
@@ -64,7 +65,7 @@ namespace Grade_project.Pages
         {
             if (UsersDataGrid.SelectedItem is User selectedUser)
             {
-                var editUserWindow = new Windows.AddEditUserWindow(selectedUser); 
+                var editUserWindow = new AddEditUserWindow(selectedUser); 
                 if (editUserWindow.ShowDialog() == true)
                 {
                     var updatedUser = editUserWindow.User;
@@ -84,6 +85,36 @@ namespace Grade_project.Pages
             else
             {
                 MessageBox.Show("Выберите пользователя для редактирования.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private async void ChangeRoleButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (UsersDataGrid.SelectedItem is User selectedUser)
+            {
+                var roles = await _httpClient.GetFromJsonAsync<List<Role>>("Roles");
+                if (roles == null || !roles.Any())
+                {
+                    MessageBox.Show("Не удалось загрузить список ролей.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                var dialog = new SelectRoleWindow(selectedUser.UserId);
+                if (dialog.ShowDialog() == true)
+                {
+                    var dto = new UserRoleDto
+                    {
+                        UserId = selectedUser.UserId,
+                        RoleId = dialog.SelectedRoleId.Value
+                    };
+
+                    await _httpClient.PostAsJsonAsync("UserRoles", dto);
+                    LoadUsersAsync();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите пользователя для изменения роли.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -110,5 +141,11 @@ namespace Grade_project.Pages
                 MessageBox.Show("Выберите пользователя для удаления.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+    }
+
+    public class UserRoleDto
+    {
+        public int UserId { get; set; }
+        public int RoleId { get; set; }
     }
 }

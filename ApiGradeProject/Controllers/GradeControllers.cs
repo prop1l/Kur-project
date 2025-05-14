@@ -3,6 +3,9 @@ using ApiGradeProject.Database;
 using ApiGradeProject.Database.Models;
 using ApiGradeProject.Script;
 using Microsoft.AspNetCore.JsonPatch;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace ApiGradeProject.Controllers
@@ -29,6 +32,14 @@ namespace ApiGradeProject.Controllers
         {
             var groups = _context.Groups.ToList();
             return Ok(groups);
+        }
+
+        [HttpGet]
+        [Route("/Roles")]
+        public IActionResult GetAllRoles()
+        {
+            var roles = _context.Roles.ToList();
+            return Ok(roles);
         }
 
         [HttpGet]
@@ -78,10 +89,95 @@ namespace ApiGradeProject.Controllers
 
         [HttpGet]
         [Route("/Users")]
-        public IActionResult GetAllUsers()
+        public IActionResult GetAll()
         {
-            var users = _context.Users.ToList();
+            var users = _context.Users
+                .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
+                .ToList();
+
             return Ok(users);
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] User newUser)
+        {
+            if (newUser == null || string.IsNullOrWhiteSpace(newUser.Password) || string.IsNullOrWhiteSpace(newUser.Email))
+                return BadRequest("Неверные данные пользователя.");
+
+            if (_context.Users.Any(u => u.Email == newUser.Email))
+                return Conflict("Пользователь с таким email уже существует.");
+
+            newUser.Password = PasswordHash.HashPassword(newUser.Password);
+            newUser.IsEmailConfirmed = false;
+            _context.Users.Add(newUser);
+            _context.SaveChanges();
+
+            var defaultRole = _context.Roles.FirstOrDefault(r => r.RoleName == "User");
+            if (defaultRole == null)
+                return StatusCode(500, "Роль 'User' не найдена в системе.");
+
+            var userRole = new UserRole
+            {
+                UserId = newUser.UserId,
+                RoleId = defaultRole.RoleId
+            };
+
+            _context.UserRoles.Add(userRole);
+            _context.SaveChanges();
+
+            Random random = new();
+            int randomNumber = random.Next(0, 1000000);
+            string token = randomNumber.ToString("D6");
+            var now = DateTime.UtcNow;
+            var expirationTime = now.AddMinutes(3);
+
+            var emailToken = new Tokenss
+            {
+                TokenValue = token,
+                UsersId = newUser.UserId,
+                CreatedAt = now,
+                ExpiresAt = expirationTime
+            };
+
+            _context.Tokensses.Add(emailToken);
+            _context.SaveChanges();
+
+            var body = $@"
+        <h3>Подтвердите ваш email</h3>
+        <p>Ваш код подтверждения:</p>
+        <h2>{token}</h2>
+        <p>Введите его в приложении для завершения регистрации.</p>";
+
+            try
+            {
+                using var client = new SmtpClient("smtp.mail.ru", 587)
+                {
+                    Credentials = new NetworkCredential("shuvaev-ilya@list.ru", "31uxVELvVjPKBAgNebPV"),
+                    EnableSsl = true
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("shuvaev-ilya@list.ru", "Grade"),
+                    Subject = "Подтверждение Email",
+                    Body = body,
+                    IsBodyHtml = true
+                };
+
+                mailMessage.To.Add(newUser.Email);
+                client.Send(mailMessage);
+            }
+            catch (SmtpException smtpEx)
+            {
+                return StatusCode(500, $"Ошибка SMTP: {smtpEx.StatusCode} - {smtpEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Не удалось отправить email: {ex.Message}");
+            }
+
+            return CreatedAtAction(nameof(GetUserById), new { id = newUser.UserId }, newUser);
         }
 
         [HttpPost]
@@ -206,22 +302,100 @@ namespace ApiGradeProject.Controllers
         [Route("/Users/VerifyToken")]
         public IActionResult VerifyToken(int userId, string verifyToken)
         {
-            var token = _context.Tokensses.FirstOrDefault(u => u.UsersId == userId && u.TokenValue == verifyToken);
+            var token = _context.Tokensses
+                .FirstOrDefault(t => t.UsersId == userId && t.TokenValue == verifyToken);
+
             if (token == null)
             {
-                return NotFound("Токен не найден.");
+                return NotFound(new { Error = "Токен не найден." });
             }
+
             if (token.ExpiresAt < DateTime.UtcNow)
             {
-                return BadRequest("Срок действия токена истек.");
+                _context.Tokensses.Remove(token);
+                _context.SaveChanges();
+                return BadRequest(new { Error = "Срок действия токена истёк." });
             }
+
             var user = _context.Users.Find(userId);
+            if (user == null)
+            {
+                _context.Tokensses.Remove(token);
+                _context.SaveChanges();
+                return NotFound(new { Error = "Пользователь не найден." });
+            }
+
             user.IsEmailConfirmed = true;
             _context.Tokensses.Remove(token);
             _context.SaveChanges();
-            return Ok(new { Message = "Почта подтверждена!" });
+
+            return Ok(new { Message = "Почта успешно подтверждена!" });
         }
 
+
+        [HttpGet]
+        [Route("/Users/ResendToken")]
+        public async Task<IActionResult> ResendToken(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+                return NotFound(new { Error = "Пользователь не найден." });
+
+            var existingToken = await _context.Tokensses.FirstOrDefaultAsync(t => t.UsersId == userId);
+            if (existingToken != null)
+            {
+                _context.Tokensses.Remove(existingToken);
+                await _context.SaveChangesAsync();
+            }
+
+            Random random = new();
+            string token = random.Next(0, 1000000).ToString("D6");
+            var expirationTime = DateTime.UtcNow.AddMinutes(3);
+
+            var newToken = new Tokenss
+            {
+                TokenValue = token,
+                UsersId = user.UserId,
+                ExpiresAt = expirationTime
+            };
+
+            _context.Tokensses.Add(newToken);
+            await _context.SaveChangesAsync();
+
+            var body = $@"
+                        <h3>Подтвердите ваш email</h3>
+                        <p>Ваш код подтверждения:</p>
+                        <h2>{token}</h2>
+                        <p>Введите его в приложении для завершения регистрации.</p>
+                        <br/>
+                        <p>С уважением,<br/>Команда Grade</p>";
+
+            try
+            {
+                using var client = new SmtpClient("smtp.mail.ru", 587)
+                {
+                    Credentials = new NetworkCredential("shuvaev-ilya@list.ru", "31uxVELvVjPKBAgNebPV"),
+                    EnableSsl = true
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("shuvaev-ilya@list.ru", "Grade"),
+                    Subject = "Подтверждение Email",
+                    Body = body,
+                    IsBodyHtml = true
+                };
+
+                mailMessage.To.Add(user.Email);
+                client.Send(mailMessage);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Error = $"Не удалось отправить email: {ex.Message}" });
+            }
+
+            return Ok(new { Message = "Токен отправлен повторно." });
+        }
 
         //
         // Tokens Controller Methods

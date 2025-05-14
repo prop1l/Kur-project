@@ -14,42 +14,41 @@ namespace Grade_project.Windows
         {
             if (sender is Button button && button.Tag is string pageName)
             {
-                // Загрузка соответствующей страницы
-                switch (pageName)
+                try
                 {
-                    case "GroupsPage":
-                        MainFrame.Navigate(new Uri("/Pages/GroupsPage.xaml", UriKind.Relative));
-                        break;
-                    case "RatingsPage":
-                        MainFrame.Navigate(new Uri("/Pages/RatingsPage.xaml", UriKind.Relative));
-                        break;
-                    case "RolesPage":
-                        MainFrame.Navigate(new Uri("/Pages/RolesPage.xaml", UriKind.Relative));
-                        break;
-                    case "SpecialitiesPage":
-                        MainFrame.Navigate(new Uri("/Pages/SpecialitiesPage.xaml", UriKind.Relative));
-                        break;
-                    case "SubjectsPage":
-                        MainFrame.Navigate(new Uri("/Pages/SubjectsPage.xaml", UriKind.Relative));
-                        break;
-                    case "TeachersPage":
-                        MainFrame.Navigate(new Uri("/Pages/TeachersPage.xaml", UriKind.Relative));
-                        break;
-                    case "UsersPage":
-                        MainFrame.Navigate(new Uri("/Pages/UsersPage.xaml", UriKind.Relative));
-                        break;
-                    case "TokensPage":
-                        MainFrame.Navigate(new Uri("/Pages/TokensPage.xaml", UriKind.Relative));
-                        break;
-                    case "UserInfosPage":
-                        MainFrame.Navigate(new Uri("/Pages/UserInfosPage.xaml", UriKind.Relative));
-                        break;
-                    case "UserRolesPage":
-                        MainFrame.Navigate(new Uri("/Pages/UserRolesPage.xaml", UriKind.Relative));
-                        break;
-                    default:
-                        MessageBox.Show("Страница не найдена.");
-                        break;
+                    switch (pageName)
+                    {
+                        case "GroupsPage":
+                            MainFrame.Navigate(new Uri("/Pages/GroupsPage.xaml", UriKind.Relative));
+                            break;
+                        case "RatingsPage":
+                            MainFrame.Navigate(new Uri("/Pages/RatingsPage.xaml", UriKind.Relative));
+                            break;
+                        case "SpecialitiesPage":
+                            MainFrame.Navigate(new Uri("/Pages/SpecialitiesPage.xaml", UriKind.Relative));
+                            break;
+                        case "SubjectsPage":
+                            MainFrame.Navigate(new Uri("/Pages/SubjectsPage.xaml", UriKind.Relative));
+                            break;
+                        case "TeachersPage":
+                            MainFrame.Navigate(new Uri("/Pages/TeachersPage.xaml", UriKind.Relative));
+                            break;
+                        case "UsersPage":
+                            MainFrame.Navigate(new Uri("/Pages/UsersPage.xaml", UriKind.Relative));
+                            break;
+                        case "TokensPage":
+                            MainFrame.Navigate(new Uri("/Pages/TokensPage.xaml", UriKind.Relative));
+                            break;
+                        case "UserInfosPage":
+                            MainFrame.Navigate(new Uri("/Pages/UserInfosPage.xaml", UriKind.Relative));
+                            break;
+                        default:
+                            throw new ArgumentException($"Неизвестная страница: {pageName}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка загрузки страницы: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

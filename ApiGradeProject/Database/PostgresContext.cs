@@ -40,10 +40,7 @@ public partial class PostgresContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
             optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=root");
-        }
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -213,6 +210,11 @@ public partial class PostgresContext : DbContext
             entity.HasKey(e => e.UserId).HasName("users_pkey");
 
             entity.ToTable("users", "kur");
+
+            entity.HasMany(d => d.UserRoles)
+                    .WithOne(p => p.User)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasIndex(e => e.Email, "users_email_key").IsUnique();
 

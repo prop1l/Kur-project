@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiGradeProject.Database.Models;
 
@@ -22,4 +23,9 @@ public partial class User
     public virtual ICollection<Tokenss> Tokensses { get; set; } = new List<Tokenss>();
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+
+    [NotMapped] // Не маппится на БД
+    public string RoleName => UserRoles
+        .Select(ur => ur.Role?.RoleName)
+        .FirstOrDefault(rn => rn != null);
 }

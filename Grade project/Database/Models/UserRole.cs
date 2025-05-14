@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Grade_project.Database.Models;
 
@@ -10,6 +11,7 @@ public partial class UserRole
     public int UserId { get; set; }
 
     public int RoleId { get; set; }
+    [JsonPropertyName("role")]
 
     public virtual Role Role { get; set; } = null!;
 

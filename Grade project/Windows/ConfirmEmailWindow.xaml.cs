@@ -16,9 +16,6 @@ namespace Grade_project.Windows
             _id = id;
         }
 
-
-
-
         private void Button_Min_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -100,7 +97,36 @@ namespace Grade_project.Windows
             }
         }
 
+        private async void ResendTokenButton_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Вы уверены, что хотите отправить токен повторно?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            using (HttpClient _client = new HttpClient())
+            {
+                if (result == MessageBoxResult.Yes)
+                {
+                    var resendUrl = $"http://localhost:5172/Users/ResendToken?userId={_id}";
+
+                    try
+                    {
+                        var response = await _client.GetAsync(resendUrl);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show("Токен отправлен повторно.");
+                        }
+                        else
+                        {
+                            string error = await response.Content.ReadAsStringAsync();
+                            MessageBox.Show($"Ошибка: {error}");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка отправки запроса: {ex.Message}");
+                    }
+                }
+            }
+        }
 
         private async void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {

@@ -48,8 +48,18 @@ public class GroupsController : ControllerBase
         return NoContent();
     }
 
-    public object Update(int v, Group updatedGroup)
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, [FromBody] Group updatedGroup)
     {
-        throw new NotImplementedException();
+        if (updatedGroup == null || id != updatedGroup.GroupId)
+            return BadRequest();
+
+        var existingGroup = _context.Groups.Find(id);
+        if (existingGroup == null) return NotFound();
+
+        _context.Entry(existingGroup).CurrentValues.SetValues(updatedGroup);
+        _context.SaveChanges();
+
+        return NoContent();
     }
 }
