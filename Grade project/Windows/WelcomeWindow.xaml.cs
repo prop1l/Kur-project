@@ -17,7 +17,45 @@ namespace Grade_project.Windows
             _userId = id;
             XID.Content = id;
             LoadUserDataAsync();
+            //LoadRatingsAsync();
+            //LoadFavoriteRatingsAsync();
         }
+
+        //private async void LoadRatingsAsync()
+        //{
+        //    try
+        //    {
+        //        using var client = new HttpClient();
+        //        var response = await client.GetAsync("http://localhost:5172/api/Ratings");
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var ratings = await response.Content.ReadFromJsonAsync<List<Rating>>();
+        //            RatingsList.ItemsSource = ratings;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Ошибка загрузки рейтингов: {ex.Message}");
+        //    }
+        //}
+
+        //private async void LoadFavoriteRatingsAsync()
+        //{
+        //    try
+        //    {
+        //        using var client = new HttpClient();
+        //        var response = await client.GetAsync($"http://localhost:5172/api/FavoriteRatings/{_userId}");
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var favorites = await response.Content.ReadFromJsonAsync<List<FavoriteRating>>();
+        //            FavoriteRatingsList.ItemsSource = favorites;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Ошибка загрузки избранных рейтингов: {ex.Message}");
+        //    }
+        //}
 
         private async void LoadUserDataAsync()
         {

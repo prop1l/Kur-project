@@ -31,8 +31,14 @@ namespace Tests.ControllerTests
         public async Task GetAll_ReturnsAllUsers()
         {
             _context.Users.AddRange(
-                new User { Login = "user1", Email = "u1@example.com", Password = "pass1" },
-                new User { Login = "user2", Email = "u2@example.com", Password = "pass2" });
+                new User { Login = "user1",
+                    Email = "u1@example.com",
+                    Password = "pass1"
+                },
+                new User { Login = "user2",
+                    Email = "u2@example.com",
+                    Password = "pass2"
+            });
             await _context.SaveChangesAsync();
 
             var result = _controller.GetAll();
@@ -45,7 +51,11 @@ namespace Tests.ControllerTests
         [Fact]
         public async Task GetById_ReturnsUser_WhenExists()
         {
-            var user = new User { UserId = 1, Login = "testuser", Email = "t@example.com", Password = "pass" };
+            var user = new User { UserId = 1,
+                Login = "testuser",
+                Email = "t@example.com",
+                Password = "pass"
+            };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
